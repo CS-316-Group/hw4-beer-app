@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, IntegerField
+from wtforms import StringField, BooleanField, IntegerField, SelectField, SubmitField
 from wtforms.validators import DataRequired
 
 class DrinkerEditFormFactory:
@@ -39,4 +39,13 @@ class DrinkerEditFormFactory:
             field_name = F.bar_field_name(i)
             default = bars_frequented[bar.name] if bar.name in bars_frequented else 0
             setattr(F, field_name, IntegerField(default=default))
+        return F()
+
+
+class ServingsFormFactory:
+    @staticmethod
+    def form(beer_names):
+        class F(@TODO):
+            beer_sel = SelectField('Beer Name', choices= @TODO )
+            submit = SubmitField('Submit')
         return F()

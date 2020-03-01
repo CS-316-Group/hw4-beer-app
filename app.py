@@ -16,13 +16,13 @@ def all_drinkers():
 @app.route('/drinker/<name>')
 def drinker(name):
     drinker = db.session.query(models.Drinker)\
-        .filter(models.Drinker.name == name).one()
+                        .filter(models.Drinker.name == name).one()
     return render_template('drinker.html', drinker=drinker)
 
 @app.route('/edit-drinker/<name>', methods=['GET', 'POST'])
 def edit_drinker(name):
     drinker = db.session.query(models.Drinker)\
-        .filter(models.Drinker.name == name).one()
+                        .filter(models.Drinker.name == name).one()
     beers = db.session.query(models.Beer).all()
     bars = db.session.query(models.Bar).all()
     form = forms.DrinkerEditFormFactory.form(drinker, beers, bars)
@@ -38,9 +38,35 @@ def edit_drinker(name):
     else:
         return render_template('edit-drinker.html', drinker=drinker, form=form)
 
+@app.route('/serves', methods=['GET', 'POST'])
+def serves():
+    beer_names = db.session.query(models.Beer.name) 
+    form = forms.ServingsFormFactory.form(beer_names)
+    if form.validate_on_submit():
+        return redirect('/servings/' + form.beer_sel.data) # not sure if this is right
+    return render_template('serves.html', form=form)
+
+@app.route('/servings/<beer_name>')
+def servings_for(beer_name):
+    # filter to get data for the beer we are concerned with 
+    # join the two tables 
+    # display only the bar name, bar address, and beer price
+    results = db.session.query(models.Serves, models.Bar) \
+                        .filter(models.Serves.beer == beer_name,  
+                                models.Bar.serves == beer_name) \
+                        .join(models.Serves.bar == models.Bar.name)\
+                        .options(load_only(models.Bar.name, 
+                                           models.Bar.address, 
+                                           models.Serves.price)) \
+                        .all() 
+    return render_template('servings_for.html', 
+                            beer_name=beer_name,
+                            data=results)
+
 @app.template_filter('pluralize')
 def pluralize(number, singular='', plural='s'):
     return singular if number in (0, 1) else plural
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
