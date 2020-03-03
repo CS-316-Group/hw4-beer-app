@@ -45,7 +45,7 @@ class DrinkerEditFormFactory:
 class ServingsFormFactory:
     @staticmethod
     def form(beer_names):
-        class F(@TODO):
-            beer_sel = SelectField('Beer Name', choices= @TODO )
+        class F(FlaskForm):
+            beer_sel = SelectField('Beer Name', choices= beer_names)
             submit = SubmitField('Submit')
         return F()
