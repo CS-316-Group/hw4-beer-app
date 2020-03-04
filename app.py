@@ -42,9 +42,12 @@ def edit_drinker(name):
 def serves():
     beer_names = db.session.query(models.Beer.name) 
     form = forms.ServingsFormFactory.form(beer_names)
-    if form.validate_on_submit():
-        return redirect(url_for('/servings/' + form.beer_sel.data)) # not sure if this is right
-    return render_template('serves.html', form=form)
+    dropdown_list = []
+    for beer in beer_names:
+        dropdown_list.append(beer[0])
+    # if form.validate_on_submit():
+    #     return redirect(url_for('/servings/' + form.beer_sel.data)) # not sure if this is right
+    return render_template('serves.html', dropdown_list=dropdown_list, form=form)
 
 @app.route('/servings/<beer_name>')
 def servings_for(beer_name):
