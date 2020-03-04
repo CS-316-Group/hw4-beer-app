@@ -1,18 +1,26 @@
 {% extends 'layout.html' %}
 {% block content %}
-<form action="{{url_for('servings_for', beer_name=form.beer_sel.data)}}" method="GET">
+<form action="{{url_for('servings_for', beer_name=form.beer_sel.data)}}" method="GET" id="form1">
 {{form.csrf_token}} 
 <p>{{form.beer_sel.label}}</p> 
-<select beer_name="beer">
+<select id="beer">
     {% for beer in dropdown_list %}
     <option value="{{ beer }}">{{ beer }}</option>
     {% endfor %}
 </select>
-<p>{{form.submit()}}</p>
 <p>
-    <!-- <button type="submit" form="form1" value="Submit">Submit</button>
-    <input type="submit" value="Submiiiiit" id=beer> -->
+    <button type="submit" id="buttonID" form="form1" value="Submit">Submit</button>
 </p>
 </form>
+<script type = "text/javascript" language = "javascript">
+    jQuery(document).ready(function() {
+       jQuery("#buttonId").click(function() {
+           var beer_value = $('#beer').val();
+           var beer_name = $('#beer :selected').text(); 
+               window.location = "{{url_for('servings_for', beer_name="+beer_name+")}}";
+   
+       });
+    });
+</script>
 {% endblock %}
 
