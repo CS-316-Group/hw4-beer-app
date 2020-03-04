@@ -43,8 +43,9 @@ class DrinkerEditFormFactory:
 
 class ServingsFormFactory:
     @staticmethod
-    def form(beer_names):
+    def form(dropdown_list):
         class F(FlaskForm):
-            beer_sel = SelectField('Beer Name', choices= beer_names)
+            # beer_sel = SelectField('Beer Name', choices= dropdown_list)
+            beer_sel = SelectField('Beer Name', choices= [(x,x) for x in dropdown_list])
             submit = SubmitField('Submit')
         return F()
