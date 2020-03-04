@@ -51,28 +51,8 @@ def serves():
 
 @app.route('/servings/<beer_name>')
 def servings_for(beer_name):
-    # filter to get data for the beer we are concerned with 
-    # join the two tables 
-    # display only the bar name, bar address, and beer price
-    # results = db.session.query(models.Serves).join(models.Bar)
-    # results = results.filter(models.Serves.beer == beer_name).all
-    #                     # .filter(models.Serves.beer == beer_name).all()
-    #                     # .join(models.Serves.bar == models.Bar.name).all()
-    #                     # .options(load_only(models.Bar.name, 
-    #                     #                    models.Bar.address, 
-    #                     #                    models.Serves.price)) \
-    #                     # .all() 
+    results=db.session.query(models.Bar, models.Serves).filter(models.Serves.beer == beer_name).join(models.Bar, models.Bar.name==models.Serves.bar).all()
 
-    # results = db.session.query(models.Serves, models.Bar).all()
-    results=db.session.query(models.Serves).join(models.Bar, models.Bar.name== models.Serves.bar).filter(models.Serves.beer == beer_name).all()
-    # \
-    #                     .filter(models.Serves.beer == beer_name,
-    #                             models.Bar.serves == beer_name).all()
-    #                     .join(models.Serves.bar == models.Bar.name)\
-    #                     .options(load_only(models.Bar.name,
-    #                                        models.Bar.address,
-    #                                        models.Serves.price)) \
-    #                     .all()
     return render_template('servings_for.html', 
                             beer_name=beer_name,
                             data=results)
