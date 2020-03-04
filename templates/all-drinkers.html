@@ -6,6 +6,9 @@
   <li><a href="{{url_for('drinker', name=drinker.name)}}">{{drinker.name}}</a></li>
   {% endfor %}
 </ul>
+<u2>
+<a href="{{url_for('serves')}}">Go to serves!</a>
+</u2>
 <hr/>
 <p>{{drinkers|length}} drinker{{drinkers|length|pluralize}}
   found in the database.</p>

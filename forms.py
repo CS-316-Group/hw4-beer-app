@@ -41,7 +41,6 @@ class DrinkerEditFormFactory:
             setattr(F, field_name, IntegerField(default=default))
         return F()
 
-
 class ServingsFormFactory:
     @staticmethod
     def form(beer_names):

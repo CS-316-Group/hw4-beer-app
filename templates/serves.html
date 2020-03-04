@@ -1,8 +1,17 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Select Beer</h1> <form method=" write a method here that returns all the bars that returns the bars that serves this beer. look at drinker.html for template. "​ >
+<form action="servings_for.html" method="get" id="form1">
 {{form.csrf_token}} 
-<p>{{form.beer_sel.label}}<br> ​@TODO​ </p> 
-<p>​@TODO​</p>
+<p>{{form.beer_sel.label}}</p> 
+<select id="beer">
+    {% for beer in dropdown_list %}
+    <option value="{{ beer }}">{{ beer }}</option>
+    {% endfor %}
+</select>
 </form>
+<p>
+    <button type="submit" form="form1" value="Submit">Submit</button>
+</p>
+
 {% endblock %}
+
