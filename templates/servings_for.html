@@ -8,11 +8,11 @@
 		<td>Bar Address</td>
 		<td>Price</td>
 	</tr>
-	{% for serve, bar in data %}
+	{% for servebar in data %}
 	<tr>
-		<td>{{bar.name}}</td>
-		<td>{{bar.address}}</td>
-		<td>{{serve.price}}</td>
+		<td>{{servebar.bar}}</td>
+		<td>{{servebar.address}}</td>
+		<td>{{servebar.price}}</td>
 	</tr>
 	{% endfor %}
 </table>
