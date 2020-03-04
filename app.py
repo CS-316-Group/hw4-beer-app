@@ -41,10 +41,10 @@ def edit_drinker(name):
 @app.route('/serves', methods=['GET', 'POST'])
 def serves():
     beer_names = db.session.query(models.Beer.name) 
-    form = forms.ServingsFormFactory.form(beer_names)
     dropdown_list = []
     for beer in beer_names:
         dropdown_list.append(beer[0])
+    form = forms.ServingsFormFactory.form(dropdown_list)
     if form.validate_on_submit():
         return redirect('/servings/' + form.beer_sel.data) # not sure if this is right
     return render_template('serves.html', dropdown_list=dropdown_list, form=form)
@@ -52,7 +52,6 @@ def serves():
 @app.route('/servings/<beer_name>')
 def servings_for(beer_name):
     results=db.session.query(models.Bar, models.Serves).filter(models.Serves.beer == beer_name).join(models.Bar, models.Bar.name==models.Serves.bar).all()
-
     return render_template('servings_for.html', 
                             beer_name=beer_name,
                             data=results)
@@ -63,4 +62,4 @@ def pluralize(number, singular='', plural='s'):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)

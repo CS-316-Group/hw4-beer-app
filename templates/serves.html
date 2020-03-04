@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
-<form action="servings_for.html" method="get" id="form1">
+<form action="{{url_for('servings_for', beer_name=form.beer_sel.data)}}" method="get" id="form1">
 {{form.csrf_token}} 
 <p>{{form.beer_sel.label}}</p> 
-<select id="beer">
+<select beer_name="beer">
     {% for beer in dropdown_list %}
     <option value="{{ beer }}">{{ beer }}</option>
     {% endfor %}
@@ -11,6 +11,7 @@
 
 <p>
     <button type="submit" form="form1" value="Submit">Submit</button>
+    <input type="submit" value="Submiiiiit" id=beer>
 </p>
 </form>
 {% endblock %}
