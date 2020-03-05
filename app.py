@@ -39,10 +39,6 @@ def edit_drinker(name):
         return render_template('edit-drinker.html', drinker=drinker, form=form)
 
 @app.route('/serves', methods=['GET', 'POST'])
-
-#PLEASE READ: In our serves function, the form.beer_sel.data value returns 'None'.
-#              However,  if you replace the 'None' with a beer name in the url,
-#              the proper results are outputted in ‘<your website baseurl>/servings/<the beer name>’
 def serves():
     beer_names = db.session.query(models.Beer.name) 
     dropdown_list = []
